@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PruebaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,4 +19,6 @@ Route::get('/', function () {
 
 Route::get('/greeting/{id}',function ($id){
     return 'hola'.$id;
-});
+})->name('hola');
+
+Route::get('/hola',[PruebaController::class, 'index']);
