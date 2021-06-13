@@ -13,12 +13,15 @@ use App\Http\Controllers\PruebaController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/greeting/{id}',function ($id){
-    return 'hola'.$id;
-})->name('hola');
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
 
-Route::get('/hola',[PruebaController::class, 'index']);
+require __DIR__.'/auth.php';
+
+Route::get('/me', [PruebaController::class, 'index'])->middleware(['auth']);
