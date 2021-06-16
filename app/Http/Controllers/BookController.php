@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\BookRegister;
 use App\Models\Book;
 use Illuminate\Http\Request;
 use App\Http\Resources\Book as BookResource;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 
 class BookController extends BaseApiController
@@ -40,7 +42,7 @@ class BookController extends BaseApiController
         }
 
         $book = Book::create($inputs);
-
+        event(new BookRegister($book));
         return $this->sendResponse(new BookResource($book), 'Book created successfully.');
     }
 
@@ -53,6 +55,7 @@ class BookController extends BaseApiController
     public function show(Book $book)
     {
         $book = Book::find($book->id);
+        dd(Gate::forUser(auth()->user())->allows('update',$book));
         if(is_null($book)){
             return $this->sendError('Book not found.');
         }
