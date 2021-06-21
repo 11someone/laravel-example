@@ -55,7 +55,7 @@ class BookController extends BaseApiController
     public function show(Book $book)
     {
         $book = Book::find($book->id);
-        dd(Gate::forUser(auth()->user())->allows('update',$book));
+        //dd(Gate::forUser(auth()->user())->allows('update',$book));
         if(is_null($book)){
             return $this->sendError('Book not found.');
         }

@@ -18,4 +18,8 @@ class Book extends Model
         'name',
         'title'
     ];
+
+    public function comment(){
+        return $this->hasMany(Comment::class);
+    }
 }
